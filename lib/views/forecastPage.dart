@@ -16,8 +16,6 @@ class ForecastPage extends StatefulWidget {
 
 class _ForecastPageState extends State<ForecastPage> {
   late Future<Forecast> cityForecast;
-  //String apiUrl =
-  //'https://api.openweathermap.org/data/2.5/weather?q=bordeaux&units=metric&appid=61600c95368cd732fd6fb6a9d1bc1585';
 
   @override
   void initState() {
