@@ -1,4 +1,4 @@
-import 'package:exomind_case/views/forecast.dart';
+import 'package:exomind_case/views/forecastPage.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,9 +13,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String homeLogo = 'assets/images/sunny.gif';
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    var sWidth = screenSize.width;
-    var sHeight = screenSize.height;
+    // var screenSize = MediaQuery.of(context).size;
+    // var sWidth = screenSize.width;
+    // var sHeight = screenSize.height;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -32,19 +32,17 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 400,
             ),
             //Image.asset(homeLogo),
-            Container(
-              child: ElevatedButton(
-                child: Text('Aller à l\'écran suivant'),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Forecast(),
-                    ),
-                  )
-                },
-              ),
-            )
+            ElevatedButton(
+              child: const Text('Aller à l\'écran suivant'),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ForecastPage(),
+                  ),
+                )
+              },
+            ),
           ],
         ),
       ),
