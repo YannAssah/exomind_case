@@ -33,9 +33,6 @@ const interval = Duration(seconds: 10);
 
 /// Weather icon display /
 
-List<String> cloudy = [];
-List<String> sunny = [];
-
 String setIcon(String icon) {
   String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
   return iconUrl;

@@ -6,6 +6,7 @@ import 'package:exomind_case/views/ui_elements/weather_card.dart';
 import 'package:exomind_case/data/static.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class ForecastPage extends StatefulWidget {
   const ForecastPage({Key? key}) : super(key: key);
@@ -18,10 +19,14 @@ class _ForecastPageState extends State<ForecastPage> {
   late Future<Forecast> cityForecast;
   late Future<List<Forecast>> citiesForecast;
 
+  bool isLoading = true;
+  bool reset = false;
+  double percent = 0;
+
   @override
   void initState() {
+    loading();
     super.initState();
-    //cityForecast = fetchForecast("paris");
     citiesForecast = fetchCast();
   }
 
@@ -32,33 +37,56 @@ class _ForecastPageState extends State<ForecastPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: FutureBuilder<List<Forecast>>(
-              future: citiesForecast,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Forecast> result = snapshot.data!;
-                  return ListView.builder(
-                      itemCount: result.length,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        //print(result[index].name!);
-                        Timer(const Duration(seconds: 10), () {});
-                        return WeatherCard(
-                            result[index].name!,
-                            result[index].main!.temp!.toInt(),
-                            result[index].main!.feelsLike!.toInt(),
-                            result[index].weather![0].icon);
-                      });
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
+          SingleChildScrollView(
+            child: isLoading
+                ? LinearProgressIndicator(
+                    value: percent.toDouble(), // Defaults to 0.5.
+                    valueColor: const AlwaysStoppedAnimation(Colors
+                        .blue), // Defaults to the current Theme's accentColor.
+                    backgroundColor: Colors
+                        .white, // Defaults to the current Theme's backgroundColor.
+                  )
+                : FutureBuilder<List<Forecast>>(
+                    future: citiesForecast,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Forecast> result = snapshot.data!;
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: result.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              //print(result[index].name!);
+                              Timer(const Duration(seconds: 10), () {});
+                              return WeatherCard(
+                                  result[index].name!,
+                                  result[index].main!.temp!.toInt(),
+                                  result[index].main!.feelsLike!.toInt(),
+                                  result[index].weather![0].icon);
+                            });
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return LinearProgressIndicator(
+                        value: percent.toDouble(), // Defaults to 0.5.
+                        valueColor: const AlwaysStoppedAnimation(Colors
+                            .blue), // Defaults to the current Theme's accentColor.
+                        backgroundColor: Colors
+                            .white, // Defaults to the current Theme's backgroundColor.
+                      );
+                      ;
+                    },
+                  ),
           ),
           ElevatedButton(
             child: const Text("Refresh"),
-            onPressed: () => {},
+            onPressed: () => {
+              setState(() {
+                isLoading = true;
+                percent = 0;
+                citiesForecast = fetchCast();
+                loading();
+              })
+            },
           )
         ],
       ),
@@ -93,5 +121,19 @@ class _ForecastPageState extends State<ForecastPage> {
     return temp;
   }
 
-  //Future<>
+  void loading() {
+    Timer timer;
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        //percent += 0.01666;
+        percent += 0.333;
+        if (percent >= 1) {
+          _.cancel();
+          isLoading = false;
+          print("Done");
+          // percent=0;
+        }
+      });
+    });
+  }
 }
