@@ -1,12 +1,3 @@
-class CityWeather {
-  CityWeather(this.id, this.city, this.temp, this.coverage);
-
-  String id;
-  String city;
-  int temp;
-  String coverage;
-}
-
 class Forecast {
   Coord? coord;
   List<Weather>? weather;

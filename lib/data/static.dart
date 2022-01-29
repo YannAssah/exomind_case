@@ -9,10 +9,11 @@ String endPoint = "https://api.openweathermap.org/data/2.5/weather?";
 String apiKey = dot_env.env["API_KEY"]!;
 
 String cityQuery = "&q=";
+String langQuery = "&lang=fr";
 String keyQuery = "&appid=" + apiKey;
 String metricQuery = "units=metric";
 
-String midUrl = endPoint + metricQuery + keyQuery + cityQuery;
+String midUrl = endPoint + metricQuery + langQuery + keyQuery + cityQuery;
 
 /// Displayed information strings/
 
@@ -28,3 +29,14 @@ String progressStr3 = "Plus que quelques secondes avant d’avoir le résultat�
 /// Reused data /
 
 const timeout = Duration(seconds: 60);
+const interval = Duration(seconds: 10);
+
+/// Weather icon display /
+
+List<String> cloudy = [];
+List<String> sunny = [];
+
+String setIcon(String icon) {
+  String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+  return iconUrl;
+}

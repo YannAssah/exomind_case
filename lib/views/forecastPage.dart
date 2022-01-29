@@ -16,37 +16,52 @@ class ForecastPage extends StatefulWidget {
 
 class _ForecastPageState extends State<ForecastPage> {
   late Future<Forecast> cityForecast;
+  late Future<List<Forecast>> citiesForecast;
 
   @override
   void initState() {
     super.initState();
     //cityForecast = fetchForecast("paris");
+    citiesForecast = fetchCast();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        FutureBuilder<Forecast>(
-          future: cityForecast,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return WeatherCard(
-                snapshot.data!.name!,
-                snapshot.data!.main!.temp!,
-                snapshot.data!.main!.feelsLike!,
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 100, 20, 100),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: FutureBuilder<List<Forecast>>(
+              future: citiesForecast,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Forecast> result = snapshot.data!;
+                  return ListView.builder(
+                      itemCount: result.length,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        //print(result[index].name!);
+                        Timer(const Duration(seconds: 10), () {});
+                        return WeatherCard(
+                            result[index].name!,
+                            result[index].main!.temp!.toInt(),
+                            result[index].main!.feelsLike!.toInt(),
+                            result[index].weather![0].icon);
+                      });
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+                return const CircularProgressIndicator();
+              },
+            ),
+          ),
+          ElevatedButton(
+            child: const Text("Refresh"),
+            onPressed: () => {},
+          )
+        ],
+      ),
     );
   }
 
@@ -61,4 +76,22 @@ class _ForecastPageState extends State<ForecastPage> {
       throw Exception('Failed to load Forecast Data');
     }
   }
+
+  Future<List<Forecast>> fetchCast() async {
+    List<Forecast> temp = [];
+    for (var city in cities) {
+      final String finalUrl = midUrl + city;
+      final response = await http.get(Uri.parse(finalUrl));
+
+      if (response.statusCode == 200) {
+        temp.add(Forecast.fromJson(jsonDecode(response.body)));
+        //return Forecast.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to load Forecast Data');
+      }
+    }
+    return temp;
+  }
+
+  //Future<>
 }
