@@ -141,12 +141,22 @@ class Main {
       this.humidity});
 
   Main.fromJson(Map<String, dynamic> json) {
-    temp = json['temp'];
-    feelsLike = json['feels_like'];
+    temp = json['temp'].toDouble();
+    feelsLike = json['feels_like'].toDouble();
     tempMin = json['temp_min'];
     tempMax = json['temp_max'];
     pressure = json['pressure'];
     humidity = json['humidity'];
+  }
+
+  static double checkDouble(dynamic value) {
+    if (value is String) {
+      return double.parse(value);
+    } else if (value is int) {
+      return value.toDouble();
+    } else {
+      return value;
+    }
   }
 
   Map<String, dynamic> toJson() {

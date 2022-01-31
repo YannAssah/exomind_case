@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:exomind_case/data/static.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard([this.cityName, this.temp, this.feels, this.icon]);
 
   final String? cityName;
-  final int? temp;
-  final int? feels;
+  final num? temp;
+  final num? feels;
   //final String? cloudCoverage;
   final String? icon;
 
   @override
   Widget build(BuildContext context) {
     String iconUrl = setIcon(icon!);
+    String temperature = temp!.toString() + metricStr;
+    String tempFeels = feelStr + feels!.toString() + metricStr;
 
     return Center(
       child: Card(
-        elevation: 8,
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5), // if you need this
           side: BorderSide(
@@ -29,20 +31,45 @@ class WeatherCard extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     height: 60,
                     width: 60,
                     child: Image.network(iconUrl),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(cityName!),
+                  Row(
+                    children: [
+                      Text(
+                        cityName!,
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.dongle(
+                            fontSize: 50, fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                        width: 70,
+                        margin: const EdgeInsets.only(
+                          left: 50,
+                        ),
+                        child: Text(
+                          temperature,
+                          style: GoogleFonts.dongle(
+                            fontSize: 35,
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
-              Text(tempStr + temp.toString() + metricStr),
-              Text(feelStr + feels.toString() + metricStr)
+              Text(
+                tempFeels,
+                style: GoogleFonts.dongle(
+                  fontSize: 25,
+                ),
+              )
             ],
           ),
         ),
