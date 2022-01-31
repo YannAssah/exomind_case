@@ -27,52 +27,52 @@ class WeatherCard extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 60,
-                    width: 60,
-                    child: Image.network(iconUrl),
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        cityName!,
-                        textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.dongle(
-                            fontSize: 50, fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        width: 70,
-                        margin: const EdgeInsets.only(
-                          left: 50,
-                        ),
-                        child: Text(
-                          temperature,
-                          style: GoogleFonts.dongle(
-                            fontSize: 35,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              Text(
-                tempFeels,
-                style: GoogleFonts.dongle(
-                  fontSize: 25,
+        //child: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  child: Image.network(iconUrl),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
                 ),
-              )
-            ],
-          ),
+                Row(
+                  children: [
+                    Text(
+                      cityName!,
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.dongle(
+                          fontSize: 50, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      width: 70,
+                      margin: const EdgeInsets.only(
+                        left: 50,
+                      ),
+                      child: Text(
+                        temperature,
+                        style: GoogleFonts.dongle(
+                          fontSize: 35,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Text(
+              tempFeels,
+              style: GoogleFonts.dongle(
+                fontSize: 25,
+              ),
+            )
+          ],
         ),
+        //),
       ),
     );
   }

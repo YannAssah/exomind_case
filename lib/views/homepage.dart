@@ -25,8 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FadeInImage(
-              placeholder: AssetImage(homeLogo),
+            Image(
               image: AssetImage(homeLogo),
               width: 400,
               height: 400,

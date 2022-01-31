@@ -38,73 +38,84 @@ class _ForecastPageState extends State<ForecastPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SingleChildScrollView(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
+      appBar: AppBar(
+          automaticallyImplyLeading: true,
+          title: const Text('Météo'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context, false),
+          )),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
                 child: isLoading
                     ? ProgressBar(
                         isLoading: isLoading,
                         percent: percent.toDouble(),
                         prgrssText: progress,
                       )
-                    // ? LinearProgressIndicator(
-                    //     value: percent.toDouble(),
-                    //     valueColor: const AlwaysStoppedAnimation(Colors.blue),
-                    //     backgroundColor: Colors.white,
-                    //   )
-                    : FutureBuilder<List<Forecast>>(
-                        future: citiesForecast,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<Forecast> result = snapshot.data!;
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: result.length,
-                                itemBuilder: (BuildContext ctxt, int index) {
-                                  return WeatherCard(
-                                      result[index].name!,
-                                      result[index].main!.temp!.toDouble(),
-                                      result[index].main!.feelsLike!.toDouble(),
-                                      result[index].weather![0].icon);
-                                });
-                          } else if (snapshot.hasError) {
-                            return Text(
-                              '${snapshot.error}',
-                              style: GoogleFonts.dongle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            );
-                          }
-                          return LinearProgressIndicator(
-                            value: percent.toDouble(),
-                            valueColor:
-                                const AlwaysStoppedAnimation(Colors.blue),
-                            backgroundColor: Colors.white,
-                          );
-                          ;
-                        },
+                    : Column(
+                        children: [
+                          FutureBuilder<List<Forecast>>(
+                            future: citiesForecast,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                List<Forecast> result = snapshot.data!;
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: result.length,
+                                    itemBuilder:
+                                        (BuildContext ctxt, int index) {
+                                      return WeatherCard(
+                                          result[index].name!,
+                                          result[index].main!.temp!.toDouble(),
+                                          result[index]
+                                              .main!
+                                              .feelsLike!
+                                              .toDouble(),
+                                          result[index].weather![0].icon);
+                                    });
+                              } else if (snapshot.hasError) {
+                                return Text(
+                                  '${snapshot.error}',
+                                  style: GoogleFonts.dongle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                );
+                              }
+                              return LinearProgressIndicator(
+                                value: percent.toDouble(),
+                                valueColor:
+                                    const AlwaysStoppedAnimation(Colors.blue),
+                                backgroundColor: Colors.white,
+                              );
+                              ;
+                            },
+                          ),
+                          ElevatedButton(
+                            child: const Text("Refresh"),
+                            onPressed: () => {
+                              setState(() {
+                                isLoading = true;
+                                percent = 0;
+                                citiesForecast = fetchCast();
+                                loading();
+                              })
+                            },
+                          ),
+                        ],
                       ),
               ),
-            ),
-            ElevatedButton(
-              child: const Text("Refresh"),
-              onPressed: () => {
-                setState(() {
-                  isLoading = true;
-                  percent = 0;
-                  citiesForecast = fetchCast();
-                  loading();
-                })
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -143,8 +154,8 @@ class _ForecastPageState extends State<ForecastPage> {
   void loading() {
     Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
-        //percent += 0.01666;
-        percent += 0.333;
+        percent += 0.1666;
+        //percent += 0.333;
         if (percent >= 1) {
           _.cancel();
           isLoading = false;
@@ -152,6 +163,15 @@ class _ForecastPageState extends State<ForecastPage> {
           // percent=0;
         }
       });
+    });
+  }
+
+  Future<void> _refresh() async {
+    setState(() {
+      isLoading = true;
+      percent = 0;
+      citiesForecast = fetchCast();
+      loading();
     });
   }
 }
