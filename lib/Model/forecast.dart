@@ -1,4 +1,6 @@
-class Forecast {
+import 'package:equatable/equatable.dart';
+
+class Forecast extends Equatable {
   Coord? coord;
   List<Weather>? weather;
   String? base;
@@ -78,6 +80,10 @@ class Forecast {
     data['cod'] = cod;
     return data;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class Coord {

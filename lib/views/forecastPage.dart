@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:exomind_case/data/weather.dart';
+import 'package:exomind_case/Model/forecast.dart';
 import 'package:exomind_case/views/test.dart';
 import 'package:exomind_case/views/ui_elements/weather_card.dart';
 import 'package:exomind_case/data/static.dart';
@@ -47,9 +47,9 @@ class _ForecastPageState extends State<ForecastPage> {
           )),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          //height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
