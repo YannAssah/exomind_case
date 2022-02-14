@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:exomind_case/data/static.dart';
+import 'package:exomind_case/old/data/static.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable

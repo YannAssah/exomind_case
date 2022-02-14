@@ -1,5 +1,4 @@
-import 'package:exomind_case/views/homepage.dart';
-import 'package:exomind_case/views/test.dart';
+import 'package:exomind_case/Old/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 
@@ -13,10 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: const MyHomePage(title: 'Weather App'),
-      //home: const TestLoad(),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        home: Scaffold());
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/material.dart';
-import 'package:exomind_case/views/ui_elements/custom_progress.dart';
+import 'package:exomind_case/Old/views/ui_elements/custom_progress.dart';
 
 class TestLoad extends StatefulWidget {
   const TestLoad({Key? key}) : super(key: key);

@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, duplicate_ignore
-
 import 'dart:convert';
 
-import 'package:exomind_case/Model/forecast.dart';
-import 'package:exomind_case/data/static.dart';
+import 'package:exomind_case/old/Model/forecast.dart';
+import 'package:exomind_case/old/data/static.dart';
 import 'package:http/http.dart' as http;
 
 class ApiHandler {
@@ -24,12 +22,9 @@ class ApiHandler {
     for (var city in cities) {
       final String finalUrl = midUrl + city;
       final response = await http.get(Uri.parse(finalUrl));
-      //Future.delayed(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         temp.add(Forecast.fromJson(jsonDecode(response.body)));
-        //print(response.body);
-        //return Forecast.fromJson(jsonDecode(response.body));
       } else {
         throw exceptionHandler(response);
       }
@@ -41,10 +36,10 @@ class ApiHandler {
     List<Forecast> temp = [];
     for (var city in cities) {
       final String finalUrl = midUrl + city;
+      Future.delayed(const Duration(seconds: 10));
       final response = await http.get(Uri.parse(finalUrl));
       //Future.delayed(Duration(seconds: 10));
       if (response.statusCode == 200) {
-        Future.delayed(const Duration(seconds: 2));
         temp.add(Forecast.fromJson(jsonDecode(response.body)));
         //print(response.body);
         //return Forecast.fromJson(jsonDecode(response.body));
@@ -93,7 +88,7 @@ class BadRequestException extends AppException {
 }
 
 class UnauthorisedException extends AppException {
-  UnauthorisedException([message]) : super(message, "Unauthorised: ");
+  UnauthorisedException([message]) : super(message, "Unauthorized: ");
 }
 
 class InvalidInputException extends AppException {

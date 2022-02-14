@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:exomind_case/Model/forecast.dart';
-import 'package:exomind_case/views/test.dart';
-import 'package:exomind_case/views/ui_elements/weather_card.dart';
-import 'package:exomind_case/data/static.dart';
+import 'package:exomind_case/old/Model/forecast.dart';
+import 'package:exomind_case/old/views/ui_elements/weather_card.dart';
+import 'package:exomind_case/old/data/static.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:exomind_case/views/ui_elements/progress_bar.dart';
+import 'package:exomind_case/Old/views/ui_elements/progress_bar.dart';
 
 class ForecastPage extends StatefulWidget {
   const ForecastPage({Key? key}) : super(key: key);
