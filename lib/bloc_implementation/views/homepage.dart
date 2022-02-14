@@ -1,4 +1,4 @@
-import 'package:exomind_case/old/views/forecast_page.dart';
+import 'package:exomind_case/bloc_implementation/views/forecast_page.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {

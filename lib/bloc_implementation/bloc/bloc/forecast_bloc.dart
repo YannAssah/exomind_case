@@ -2,27 +2,27 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exomind_case/bloc_implementation/constant.dart';
 import 'package:exomind_case/bloc_implementation/data/repository/forecast_rep.dart';
-import 'package:meta/meta.dart';
+//import 'package:meta/meta.dart';
 import 'package:exomind_case/bloc_implementation/data/model/forecast.dart';
 
 part 'forecast_event.dart';
 part 'forecast_state.dart';
 
+enum ForecastEventTrigger { load, display }
+
 class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
-  ForecastBloc(ForecastState initialState) : super(initialState);
+  ForecastBloc() : super(ForecastLoading());
 
   // ForecastBloc() : super(ForecastLoading()) {
-  //   on<ForecastEvent>((event, emit) {
+  //   on<GetForecast>((event, emit) {
   //     // ignore: todo
   //     // TODO: implement event handler
-
+  //     mapEventToState(event);
   //   });
-
   // }
 
   ForecastState get initialState => ForecastLoading();
 
-  @override
   Stream<ForecastState> mapEventToState(
     ForecastEvent event,
   ) async* {
@@ -31,19 +31,24 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
       // Outputting a state from the asynchronous generator
       yield ForecastLoading();
       Forecast rennes = await ForecastRepository().decodeOneForecast(cities[0]);
+      print(rennes.name);
 
-      Future.delayed(const Duration(seconds: 10));
+      Future.delayed(const Duration(seconds: 1));
       Forecast paris = await ForecastRepository().decodeOneForecast(cities[1]);
+      print(paris.name);
 
-      Future.delayed(const Duration(seconds: 10));
+      Future.delayed(const Duration(seconds: 1));
       Forecast nantes = await ForecastRepository().decodeOneForecast(cities[2]);
+      print(nantes.name);
 
-      Future.delayed(const Duration(seconds: 10));
+      Future.delayed(const Duration(seconds: 1));
       Forecast bordeaux =
           await ForecastRepository().decodeOneForecast(cities[3]);
+      print(bordeaux.name);
 
-      Future.delayed(const Duration(seconds: 10));
+      Future.delayed(const Duration(seconds: 1));
       Forecast lyon = await ForecastRepository().decodeOneForecast(cities[4]);
+      print(lyon.name);
 
       //List<Forecast> test = await ForecastRepository().decodeAllForecast();
       List<Forecast> result = [rennes, paris, nantes, bordeaux, lyon];

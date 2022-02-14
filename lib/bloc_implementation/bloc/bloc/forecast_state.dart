@@ -7,9 +7,7 @@ abstract class ForecastState extends Equatable {
   List<Object> get props => [];
 }
 
-class ForecastLoading extends ForecastState {
-  const ForecastLoading();
-}
+class ForecastLoading extends ForecastState {}
 
 class ForecastLoaded extends ForecastState {
   late final List<Forecast> forecast;

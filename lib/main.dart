@@ -1,4 +1,4 @@
-import 'package:exomind_case/Old/views/homepage.dart';
+import 'package:exomind_case/bloc_implementation/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 
@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(),
-        home: Scaffold());
+        home: const MyHomePage(
+          title: 'Météo',
+        ));
   }
 }

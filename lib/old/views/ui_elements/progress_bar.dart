@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:exomind_case/old/data/static.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class ProgressBar extends StatefulWidget {
@@ -50,7 +46,7 @@ class _ProgressBarState extends State<ProgressBar> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
+              margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
               child: LinearProgressIndicator(
                 value: widget.percent,
                 valueColor: const AlwaysStoppedAnimation(Colors.blue),
